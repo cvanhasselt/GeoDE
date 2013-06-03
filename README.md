@@ -1,9 +1,9 @@
 Geode
-====
+=====
 
 The intent of Geode.js is to be a lightweight Javascript bring country specific identifiers into a Javascript UI.  
 
-Background:
+## Background:
 
 The ISO-3166 specification has two different codes, alpha-2 and alpha-3, that are routinely used to identify countries.
 However, there is no exact way, other than one-to-one mapping, of deriving the alpha-2 value from the alpha-3 value.
