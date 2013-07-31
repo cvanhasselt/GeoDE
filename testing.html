@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="resources/qunit-1.12.0.css" />
+    <script src="resources/qunit-1.12.0.js"></script>
+    <script src="js/geode.js"></script>
+    
+    <script type="text/javascript">
+<!--
+    // simple function called by the Qunit tests
+    function setupGeode(cb) {
+        $Z = new GeoDE('isodata.json');
+        $Z.loadData(cb);
+    };
+
+ //-->
+    </script>
+    <script type="text/javascript" src="tests/GeoDETests.js">  </script>
+  </head>
+  <body>
+    <div id="wrapper" style="width: 850px; margin-right: auto; margin-left: auto;">
+        <img src="img/geode_banner.jpg" />
+        <h1 id="qunit-header">GeoDE Testing</h1>
+        <h2 id="qunit-banner"></h2>
+        <div id="qunit-testrunner-toolbar"></div>  
+        <h2 id="qunit-userAgent"></h2>  
+        <ol id="qunit-tests"></ol>
+        <div id="qunit-fixture"></div>
+    </div>
+  </body>
+</html>
