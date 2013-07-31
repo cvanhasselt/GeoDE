@@ -45,7 +45,7 @@ to easily pick and choose what data to include.
 - [ ] Add famfam flags
 - [ ] Better documentation
 - [ ] Practical demo example
-- [ ] (Longer term) Save to browser cache or local storage in some way
+- [ ] A longer term change, save to browser cache or local storage in some way
 
 
 
