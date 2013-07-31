@@ -9,6 +9,8 @@ and because a geode is a very pretty type of crystalline rock.  My hope is make 
 as a rock but also elegant and pretty.  The name is also, conveniently, a good acronym for 
 Geographice Data Engine.  
 
+This is also the first time I've used Git, so anyone who wanders by and sees this, please be kind.
+
 ## Background:
 
 The ISO-3166 specification has two different codes, alpha-2 and alpha-3, that are routinely used to
@@ -35,7 +37,17 @@ The data will be stored as JSON data, as it is likely that this data will change
 Rather than bundle the data in the code (as in my first prototype), this will allow users
 to easily pick and choose what data to include.
 
-This is also the first time I've used Git, so anyone who wanders by and sees this, please be kind.
+## TODO list
+
+- [ ] Grouping of countries, with methods like addToGroup, deleteFromGroup, etc.
+- [ ] Recent searches group
+- [ ] Add more data, such as international calling codes
+- [ ] Add famfam flags
+- [ ] Better documentation
+- [ ] Practical demo example
+- [ ] (Longer term) Save to browser cache or local storage in some way
+
+
 
 
 
