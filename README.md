@@ -24,6 +24,8 @@ set of images named on the alpha-2 codes, but your database uses alpha-3 codes, 
 to translate between the two codes without having to add an extra column to your database or 
 rename all the images.
 
+For more background on this project, please check out the [Wiki](https://github.com/cvanhasselt/GeoDE/wiki).
+
 ## Initial Data
 
 Data included in early versions will include:
