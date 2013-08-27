@@ -41,18 +41,16 @@ Array.isArray = Array.isArray || function (vArg) {
  *   client environment.  
  *
  *  @author     Chris van Hasselt 
- *  
  *  @param      {string}    source  source is the name of the JSON source file where country data is stored.
  *                                  The default source file is isodata.json.
  */
-
 var GeoDE = GeoDE || function (source) {
 
     var self           = this,      // reference to current object
         dataLoaded     = false,     // private variable, used to note whether data is loaded; read access through isDataLoaded() method
         dataFile       = source,    // private variable, used to store name of the GeoDE object datafile.  
                                     // Multiple GeoDE objects could be used with different datafiles
-        recentSearches = [];
+        recentSearches = {};
 
     function getXHR() {
 
@@ -62,13 +60,13 @@ var GeoDE = GeoDE || function (source) {
             result = new XMLHttpRequest();
         } else {
             try {
-                result = new ActiveXObject("MSXML2.XMLHTTP.3.0");
-            } catch (e) { }
+                result = new window.ActiveXObject("MSXML2.XMLHTTP.3.0");
+            } catch (e1) { }
 
             if (result === null) {
                 try {
-                    result = new ActiveXObject("Microsoft.XMLHTTP");
-                } catch (e) { }
+                    result = new window.ActiveXObject("Microsoft.XMLHTTP");
+                } catch (e2) { }
             }
         }
         return result;
@@ -101,16 +99,16 @@ var GeoDE = GeoDE || function (source) {
             keepgoing   = true;                   // keepgoing until match is found.
 
         do {
-        // The list item may be either a single value, or an array.  if it is an array, a search within this array is needed.
-        // The only list that may contain arrays is the isonames list, which, for example, has the following entry
-        //
-        //         [
-        //            "Holy See (Vatican City State)",
-        //            "Vatican",
-        //            "Vatican City",
-        //            "Holy See"
-        //         ]
-        //
+            // The list item may be either a single value, or an array.  if it is an array, a search within this array is needed.
+            // The only list that may contain arrays is the isonames list, which, for example, has the following entry
+            //
+            //         [
+            //            "Holy See (Vatican City State)",
+            //            "Vatican",
+            //            "Vatican City",
+            //            "Holy See"
+            //         ]
+            //
             if (Array.isArray(list[counter])) {
                 deepcounter = list[counter].length - 1;
                 do {
@@ -138,22 +136,27 @@ var GeoDE = GeoDE || function (source) {
      */
     function search(term) {
 
-        var currIdx = 0;
+        var currIdx = -1;  // use an index outside of the array.  
 
-        // get the index of the searchTerm, if available 
-        if (term.match(/^[a-zA-Z]{2}$/i) !== null) {
-            // search term is iso3166-alpha2 code
-            currIdx = getCountryIndex(self.isodata.alpha2, term);
-        } else if (term.match(/^[a-zA-Z]{3}$/i)) {
-            // search term is an iso3166-alpha3 code
-            currIdx = getCountryIndex(self.isodata.alpha3, term);
-        } else if (term.match(/^\d{3}$/i)) {
-            // search term is a UN-M49 code
-            currIdx = getCountryIndex(self.isodata.unm49, term);
+        if (typeof(recentSearches[term]) !== 'undefined') {
+            currIdx = recentSearches[term];
         } else {
-            // search term is a country name
-            currIdx = getCountryIndex(self.isodata.isonames, term);
+            // get the index of the searchTerm, if available 
+            if (term.match(/^[a-zA-Z]{2}$/i) !== null) {
+                // search term is iso3166-alpha2 code
+                currIdx = getCountryIndex(self.isodata.alpha2, term);
+            } else if (term.match(/^[a-zA-Z]{3}$/i)) {
+                // search term is an iso3166-alpha3 code
+                currIdx = getCountryIndex(self.isodata.alpha3, term);
+            } else if (term.match(/^\d{3}$/i)) {
+                // search term is a UN-M49 code
+                currIdx = getCountryIndex(self.isodata.unm49, term);
+            } else {
+                // search term is a country name
+                currIdx = getCountryIndex(self.isodata.isonames, term);
+            }
         }
+        
         return currIdx;
     }
 
@@ -162,14 +165,19 @@ var GeoDE = GeoDE || function (source) {
      */
     function getCountryObject(idx, searchTerm) {
 
-        var countryInfo = {
-                query      : searchTerm,
+        var countryInfo = null;
+
+        if (idx >= 0) {
+            countryInfo = {
+                // query      : searchTerm,
                 index      : idx,
                 name       : (Array.isArray(self.isodata.isonames[idx])) ? self.isodata.isonames[idx][0] : self.isodata.isonames[idx],
                 alpha2     : self.isodata.alpha2[idx],
                 alpha3     : self.isodata.alpha3[idx],
                 unm49      : self.isodata.unm49[idx]
             };
+        };
+        recentSearches[searchTerm] = idx;
 
         return countryInfo;
     }
@@ -210,6 +218,7 @@ var GeoDE = GeoDE || function (source) {
         } else {
             s = searchTerm;
         }
+
         idx = search(s);
 
         // return country info object

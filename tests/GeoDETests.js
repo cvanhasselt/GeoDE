@@ -1,13 +1,13 @@
     module('Module 1');
         asyncTest('Testing if data is loaded', 1, function() {
-            // check to see if data is loaded
+            // check to see if data is loaded 
+            // THIS TEST MUST RUN SUCCESSFULLY FOR OTHER TESTS TO WORK.
             setupGeode(function () {
                 equal($Z.isDataLoaded(), true, 'Data is Loaded');
                 start();
             }); 
         });
 
-        
     module('Module 2');
         test('Testing data returns', 28, function() {
 
@@ -78,37 +78,12 @@
             equal($Z.getCountryInfo(country1).alpha2, $Z.getCountryInfo(altCountry1).alpha2, '\'' + country1 + '\' should return same value as \'' + altCountry1 +'\'' );
             equal($Z.getCountryInfo(country2).alpha2, $Z.getCountryInfo(altCountry2).alpha2, '\'' + country2 + '\' should return same value as \'' + altCountry2 +'\'' );
         });
-       
         
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
+
+    module('Module 4');
+        test('Testing for a bad value.', 1, function() {
+            var badCountry = 'Badland';
+            // testing a bad value; should equal null.  In practice, this should be tested prior 
+            // to using any returned value object value.
+            equal($Z.getCountryInfo(badCountry), null, 'Expected to be null');
+        });
